@@ -8,19 +8,20 @@ import locale
 
 locale.setlocale(locale.LC_MONETARY,'en_IN')
 
+load_dotenv()
 app=Flask(__name__)
 #CORS(app)
 
-load_dotenv()
 
+
+load_dotenv()
 
 DEBUG=eval(os.environ.get("DEBUG"))
 
 PRODUCTION=eval(os.environ.get("PRODUCTION"))
 
 
-PORT = int(os.environ.get("PORT"))
-
+PORT = 5002
 
 
 model=pickle.load(open('model.pkl','rb'))
@@ -53,7 +54,7 @@ def prediction():
     return render_template('results.html',price='\u20B9' +" "+ locale.currency(predictedprice,symbol=False, grouping=True))
 
 if __name__ == "__main__":
-    if(PRODUCTION):
+    if(not PRODUCTION):
         app.run()   
     else:
        print("app running at port",PORT,"debug mode",DEBUG)
