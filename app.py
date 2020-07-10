@@ -13,7 +13,15 @@ app=Flask(__name__)
 
 load_dotenv()
 
-debug=os.getenv('DEBUG')
+
+DEBUG=eval(os.environ.get("DEBUG"))
+
+PRODUCTION=eval(os.environ.get("PRODUCTION"))
+
+
+PORT = int(os.environ.get("PORT"))
+
+
 
 model=pickle.load(open('model.pkl','rb'))
 
@@ -44,4 +52,9 @@ def prediction():
         predictedprice=round(predictedprice[0]*100000,2)
     return render_template('results.html',price='\u20B9' +" "+ locale.currency(predictedprice,symbol=False, grouping=True))
 
-app.run(port=5002,debug=False)
+if __name__ == "__main__":
+    if(PRODUCTION):
+        app.run()   
+    else:
+       print("app running at port",PORT,"debug mode",DEBUG)
+       app.run(port=PORT,debug=DEBUG)
