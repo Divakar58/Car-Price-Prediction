@@ -1,13 +1,17 @@
 {% extends 'base.html' %} {% block content%}
 
-<body>
+<body style="margin:200px">
     <div class="card w-75">
         <div class="card-body">
-            <h5 class="card-title">Predicted car price</h5>
-            <p class="card-text">Car can be sold at {{price[0].round(2)}}</p>
-            <a href="/" class="btn btn-primary">Predict again</a>
+            <h5 class="card-title">Predicted car price {{price}}</h5>
+            <a href="/" style="margin:20px;" class="btn btn-primary">Predict again</a>
         </div>
     </div>
 
 </body>
+<script>
+    $('document').on('ready', function() {
+        $("#spinnermodal").modal("hide");
+    })
+</script>
 {% endblock %}

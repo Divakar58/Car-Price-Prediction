@@ -4,6 +4,9 @@ import pickle
 import pandas as pd
 from dotenv import load_dotenv
 import os
+import locale
+
+locale.setlocale(locale.LC_MONETARY,'en_IN')
 
 app=Flask(__name__)
 #CORS(app)
@@ -36,9 +39,9 @@ def prediction():
         sellertype=int(request.form['sellertype'])
         transmission=int(request.form['transmission'])
         owner=int(request.form['noowner'])
-        print([present_price,kmtravelled,sellertype,transmission,owner,diesel,petrol,noyear])
         predictedprice= model.predict(pd.DataFrame([present_price,kmtravelled,sellertype,transmission,owner,diesel,petrol,noyear],['Present_Price', 'Kms_Driven', 'Seller_Type', 'Transmission', 'Owner',
-       'Diesel', 'Petrol', 'No.years']).T)
-    return render_template('results.html',price=predictedprice*100000)
+        'Diesel', 'Petrol', 'No.years']).T)
+        predictedprice=round(predictedprice[0]*100000,2)
+    return render_template('results.html',price='\u20B9' +" "+ locale.currency(predictedprice,symbol=False, grouping=True))
 
 app.run(port=5002,debug=False)

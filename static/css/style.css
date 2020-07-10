@@ -4,11 +4,15 @@
 }
 
 .title-span {
-    margin: 198px 0px 0px 548px;
+    margin: 158px 0px 0px 548px;
     padding: 14px;
     text-align: center;
 }
 
 .predictbtn {
     margin-top: 2px;
+}
+
+.hide {
+    display: none;
 }
